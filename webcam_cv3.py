@@ -4,6 +4,9 @@ import logging as log
 import datetime as dt
 from time import sleep
 
+"""The measurement from where the stage is to where the people will be is about
+    """
+
 cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 log.basicConfig(filename='webcam.log',level=log.INFO)
@@ -24,10 +27,10 @@ while True:
 
     faces = faceCascade.detectMultiScale(
         gray,
-        scaleFactor=1.1,
-        minNeighbors=5,
-        minSize=(30, 30)
-    )
+        scaleFactor=1.2,
+        minNeighbors=8,
+        minSize=(75, 75)
+
 
     # Draw a rectangle around the faces
     for (x, y, w, h) in faces:
@@ -36,6 +39,10 @@ while True:
     if anterior != len(faces):
         anterior = len(faces)
         log.info("faces: "+str(len(faces))+" at "+str(dt.datetime.now()))
+
+        if anterior >0:
+                print("Peekaboo!")
+
 
 
     # Display the resulting frame
