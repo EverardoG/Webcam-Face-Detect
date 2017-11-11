@@ -30,7 +30,7 @@ while True:
         scaleFactor=1.2,
         minNeighbors=8,
         minSize=(75, 75)
-
+        )
 
     # Draw a rectangle around the faces
     for (x, y, w, h) in faces:
