@@ -28,21 +28,32 @@ while True:
     faces = faceCascade.detectMultiScale(
         gray,
         scaleFactor=1.2,
-        minNeighbors=8,
-        minSize=(75, 75)
+        minNeighbors=6,
+        minSize=(80, 80)
         )
 
     # Draw a rectangle around the faces
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
+    n=anterior
+
+    print("First one:",anterior)
     if anterior != len(faces):
         anterior = len(faces)
+
+        print("Second one:",anterior)
         log.info("faces: "+str(len(faces))+" at "+str(dt.datetime.now()))
+        print(dt.datetime.now())
 
-        if anterior >0:
-                print("Peekaboo!")
+        t0 = dt.datetime.now()
 
+        if anterior >=n+1:
+            print("Peekaboo!")
+
+    #tf = dt.datetime.now()
+    #lag = tf-t0
+    #print(lag)
 
 
     # Display the resulting frame
