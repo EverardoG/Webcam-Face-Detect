@@ -3,18 +3,33 @@ import sys
 import logging as log
 import datetime as dt
 from time import sleep
+import serial
+import time
 
-"""The measurement from where the stage is to where the people will be is about
-    """
+"""This initiates the arduino"""
+arduino = serial.Serial("/dev/ttyACM0",9600, timeout =5);
+time.sleep(1)
+print("Starting up Arduino")
+test_arduino = 1
+arduino.flush()
+
+
+"""This is all face cascade stuff"""
 
 cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 log.basicConfig(filename='webcam.log',level=log.INFO)
 
-video_capture = cv2.VideoCapture(0)
+"""Here it sets up a video stream and intializes how many faces there are to 0"""
+
+video_capture = cv2.VideoCapture(1)
 anterior = 0
 
+"""This is all the code for scanning for faces"""
+
 while True:
+
+    happiness_index = 0
     if not video_capture.isOpened():
         print('Unable to load camera.')
         sleep(5)
@@ -27,8 +42,8 @@ while True:
 
     faces = faceCascade.detectMultiScale(
         gray,
-        scaleFactor=1.2,
-        minNeighbors=6,
+        scaleFactor=1.1,
+        minNeighbors=5,
         minSize=(80, 80)
         )
 
@@ -36,25 +51,28 @@ while True:
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-    n=anterior
+    n0=anterior
 
-    print("First one:",anterior)
+    #print("First one:",n0)
+
     if anterior != len(faces):
         anterior = len(faces)
 
-        print("Second one:",anterior)
+        nf=anterior
+        #tf = dt.datetime.now()
+        #print("Second one:",nf)
         log.info("faces: "+str(len(faces))+" at "+str(dt.datetime.now()))
-        print(dt.datetime.now())
+        #print(dt.datetime.now())
 
-        t0 = dt.datetime.now()
 
-        if anterior >=n+1:
-            print("Peekaboo!")
 
-    #tf = dt.datetime.now()
-    #lag = tf-t0
-    #print(lag)
+        if nf > n0:
+            happiness_index = 1
+            print("Happy! :D")
 
+        if nf < n0:
+            happiness_index = 2
+            print("Sadness :(")
 
     # Display the resulting frame
     cv2.imshow('Video', frame)
