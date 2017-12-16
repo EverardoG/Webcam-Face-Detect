@@ -84,7 +84,7 @@ while True:
             #print new_data1
             print("Happy! :D")
 
-        if nf < n0:
+        if nf < n0:pee
             happiness_index = 0
             robot_mood=str("Nuetral")
             #arduino.write(happiness_index)
