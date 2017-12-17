@@ -7,7 +7,7 @@ import serial
 import time
 
 """This initiates the arduino"""
-arduino = serial.Serial("/dev/ttyACM1",9600, timeout =5);
+arduino = serial.Serial("/dev/ttyACM0",9600, timeout =5);
 time.sleep(1)
 print("Starting up Arduino")
 test_arduino = 1
@@ -84,7 +84,7 @@ while True:
             #print new_data1
             print("Happy! :D")
 
-        if nf < n0:pee
+        if nf < n0:
             happiness_index = 0
             robot_mood=str("Nuetral")
             #arduino.write(happiness_index)

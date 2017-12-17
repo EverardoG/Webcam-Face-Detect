@@ -23,22 +23,23 @@
 */
 // This adds in a state
 int state;
-
+int led = 1;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(led, OUTPUT);
   Serial.begin(9600); // this initializes receiving commands from serial
 }
 
 // the loop function runs over and over again forever
 void loop() {
+  Serial.println("Working");
   if (Serial.available() > 0) { // more than zero means that there is information being transmitted
     if (Serial.peek() == 'c') {
       Serial.read();
       state = Serial.parseInt();
-      digitalWrite(LED_BUILTIN,state);
+      digitalWrite(led,state);
     }
     while (Serial.available() > 0) {
       Serial.read();
